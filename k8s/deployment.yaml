@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discount-microservice
+  labels:
+    app: discount-microservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: discount-microservice
+  template:
+    metadata:
+      labels:
+        app: discount-microservice
+    spec:
+      containers:
+      - name: discount-microservice
+        image: discount-microservice:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
