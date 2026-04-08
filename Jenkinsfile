@@ -15,15 +15,15 @@ pipeline {
         
         stage('Build & Test') {
             steps {
-                sh 'mvn clean test package'
+                bat 'mvn clean test package'
             }
         }
         
         stage('Docker Build') {
             steps {
                 script {
-                    sh "docker build -t ${ENV.DOCKER_IMAGE}:${ENV.DOCKER_TAG} ."
-                    sh "docker tag ${ENV.DOCKER_IMAGE}:${ENV.DOCKER_TAG} ${ENV.DOCKER_IMAGE}:latest"
+                    bat "docker build -t ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} ."
+                    bat "docker tag ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} ${env.DOCKER_IMAGE}:latest"
                 }
             }
         }
@@ -32,8 +32,8 @@ pipeline {
             steps {
                 script {
                     // Assuming kubectl is configured on Jenkins worker
-                    sh "kubectl apply -f k8s/deployment.yaml"
-                    sh "kubectl apply -f k8s/service.yaml"
+                    bat "kubectl apply -f k8s/deployment.yaml"
+                    bat "kubectl apply -f k8s/service.yaml"
                 }
             }
         }
